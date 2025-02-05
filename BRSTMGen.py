@@ -10,13 +10,13 @@ import shutil
 import subprocess
 import traceback
 
-# You may edit these parameters
+########### You may edit these parameters ###########
 FAST_PITCH_SEMITONES_UP = 1  # Default: 1
 FAST_SPEED_MULTI = 1.1  # Default: 1.1
 SAMPLE_RATE = 32000  # Default: 32000
 MAKE_FINAL_LAP = True
 VERBOSE_LOG = False
-
+#####################################################
 
 if sys.platform == 'win32':
     TONAME = r'\\.\pipe\ToSrvPipe'

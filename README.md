@@ -31,13 +31,14 @@ Note: Currently only Windows is supported.
 # Usage
 When the setup is complete, usage is fairly simple, assuming you want to create standard (multi-channel) BRSTMs used for Mario Kart Wii course music. Just a few things to note about the Audacity project and running the script.
 ## Setting up the Audacity project
-- Each stereo track becomes a stereo stream in the BRSTM. For multi-channel BRSTMS, simply add more stereo tracks.
+- Each stereo track becomes a stereo stream in the BRSTM. For multi-channel BRSTMs, simply add more stereo tracks.
 - The loop start and end points are determined by labels. To create a label, click on the timeline and press Ctrl+B. You will see a new labels track with one label.
   - The first label (from left-to-right) will be the loop start point.
   - The second label will be the loop end point. (Not needed if you want the end point to be the end of the audio.)
   - If you already use labels for things, you may name the labels "Start", "S", "End" or "E" (case-insensitive).
   - Without labels, the BRSTM will loop from 0s to the end of the longest audio track. (Currently, it is not possible to disable looping. This may change in the future as a parameter.)
   - Labels can technically be ranges, but only the start of the range will be used for each label.
+  - Order of the tracks is from top to bottom, top-most audio track is stream 1, below that is stream 2 etc.. The location of the labels is not important.
 - No need to worry about resampling, running the script will set the project's sample rate to 32000 Hz (or whatever is specified in the parameter).
 
 ## Running the script
@@ -58,3 +59,7 @@ Towards the top of the script BRSTMGen.py, there are a few parameters you can ad
   - Whether to create a final lap BRSTM.
 - VERBOSE_LOG (Default: False)
   - Whether to print more information to the console about what the script is doing.
+
+## Troubleshooting
+- If you get an error during the LoopingAudioConverter stage, you may need to change your number formats to use . (period) as decimal separator. (Control Panel -> Clock and Region -> Change date, time, or number formats -> Additional settings -> Decimal symbol)
+  - This is an issue with LAC, not with BRSTMGen.
