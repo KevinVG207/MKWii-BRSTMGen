@@ -36,7 +36,7 @@ When the setup is complete, usage is fairly simple, assuming you want to create 
   - The first label (from left-to-right) will be the loop start point.
   - The second label will be the loop end point. (Not needed if you want the end point to be the end of the audio.)
   - If you already use labels for things, you may name the labels "Start", "S", "End" or "E" (case-insensitive).
-  - Without labels, the BRSTM will loop from the start to the end of the audio. (Currently, it is not possible to disable looping. This may change in the future as a parameter.)
+  - Without labels, the BRSTM will loop from 0s to the end of the longest audio track. (Currently, it is not possible to disable looping. This may change in the future as a parameter.)
 - No need to worry about resampling, running the script will set the project's bitrate to 32000 Hz (or whatever is specified in the parameter).
 
 ## Running the script
