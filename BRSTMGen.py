@@ -1,7 +1,7 @@
 # MKWii race BRSTM generator.
 # Author: KevinVG207
 # Version: 1.0.0
-
+# Info/usage: https://github.com/KevinVG207/MKWii-BRSTMGen
 import os
 import sys
 import json
@@ -9,12 +9,13 @@ import math
 import shutil
 import subprocess
 
+# You may edit these parameters
 FAST_PITCH_SEMITONES_UP = 2
 FAST_SPEED_MULTI = 1.1
 SAMPLE_RATE = 32000
-# SPEED_UP_PERCENTAGE = 10 (Does not work)
 MAKE_FINAL_LAP = True
 VERBOSE_LOG = False
+
 
 if sys.platform == 'win32':
     TONAME = r'\\.\pipe\ToSrvPipe'
