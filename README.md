@@ -48,7 +48,7 @@ When the setup is complete, usage is fairly simple, assuming you want to create 
 
 ## Adjusting script parameters
 Towards the top of the script BRSTMGen.py, there are a few parameters you can adjust. The parameters are described below. (You can edit the script in any text editor, like Notepad.)
-- FAST_PITCH_SEMITONES_UP (Default: 2)
+- FAST_PITCH_SEMITONES_UP (Default: 1)
   - The number of semitones to pitch up the final lap BRSTM.
 - FAST_SPEED_MULTI (Default: 1.1)
   - The speed multiplier for the final lap BRSTM. (1.1 is 10% faster.)
