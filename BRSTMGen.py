@@ -10,9 +10,9 @@ import shutil
 import subprocess
 
 # You may edit these parameters
-FAST_PITCH_SEMITONES_UP = 2
-FAST_SPEED_MULTI = 1.1
-SAMPLE_RATE = 32000
+FAST_PITCH_SEMITONES_UP = 2  # Default: 2
+FAST_SPEED_MULTI = 1.1  # Default: 1.1
+SAMPLE_RATE = 32000  # Default: 32000
 MAKE_FINAL_LAP = True
 VERBOSE_LOG = False
 
@@ -110,7 +110,7 @@ def get_loop_points(tracks):
                 loop_end_sample = label[0] * SAMPLE_RATE
     
     if loop_end_sample == 0:
-        loop_end_sample = max([track['end'] if 'end' in track else 0 for track in tracks]) * SAMPLE_RATE
+        loop_end_sample = max([track['end'] if 'end' in track else 0 for track in tracks]) * SAMPLE_RATE - 1
     
     return math.floor(loop_start_sample), math.floor(loop_end_sample)
 
@@ -118,7 +118,7 @@ def convert_vgaudio(in_paths, out_path, loop_start_sample=0, loop_end_sample=-1)
     in_paths_str = " ".join([f'-i "{path}"' for path in in_paths])
     command = f"VGAudioCli.exe {in_paths_str} {out_path} -l {loop_start_sample}-{loop_end_sample} --out-format gd-adpcm"
     print_debug(command)
-    subprocess.call(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    call_subprocess(command)
     # os.system(command)
 
 def create_fast_brstm(in_path, out_path):
@@ -137,12 +137,18 @@ def create_fast_brstm(in_path, out_path):
         f.write(xml)
     
     command = f'LoopingAudioConverter "{tmp_xml_path}" "{in_path}" --auto'
-    print_debug(command)
-    subprocess.call(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    call_subprocess(command)
     # os.system(command)
 
     shutil.copy(tmp_output, out_path)
     shutil.rmtree(tmp_folder)
+
+def call_subprocess(command):
+    if VERBOSE_LOG:
+        print(command)
+        subprocess.call(command, shell=True)
+    else:
+        subprocess.call(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def select_track(index):
     do_command(f'Select: Track={index} Mode=Set')
@@ -186,7 +192,7 @@ def _get_response():
 
 def print_debug(*args, **kwargs):
     if VERBOSE_LOG:
-        print_debug(*args, **kwargs)
+        print(*args, **kwargs)
 
 LAC_XML_TEMPLATE = """<?xml version="1.0"?>
 <Options xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
