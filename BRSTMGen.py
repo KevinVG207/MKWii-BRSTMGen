@@ -1,7 +1,7 @@
 # MKWii race BRSTM generator.
 # Author: KevinVG207
 # Version: 1.0.0
-# Info/usage: https://github.com/KevinVG207/MKWii-BRSTMGen
+# Info/usage/updates: https://github.com/KevinVG207/MKWii-BRSTMGen
 import os
 import sys
 import json
