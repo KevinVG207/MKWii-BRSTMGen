@@ -43,7 +43,7 @@ When the setup is complete, usage is fairly simple, assuming you want to create 
 - Make sure there is only one Audacity project open, before running the script.
 - Run the script by double-clicking on BRSTMGen.py or running it from the command line with Python.
 - You will find the BRSTMs in a folder called "output" in the LAC folder.
-- For convenience, you could create a shortcut to the script to somewhere else on your computer, like the desktop.
+- For convenience, you could create a shortcut to the script somewhere else on your computer, like the desktop.
 
 ## Adjusting script parameters
 Towards the top of the script BRSTMGen.py, there are a few parameters you can adjust. The parameters are described below. (You can edit the script in any text editor, like Notepad.)
