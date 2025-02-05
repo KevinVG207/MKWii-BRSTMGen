@@ -8,6 +8,7 @@ import json
 import math
 import shutil
 import subprocess
+import traceback
 
 # You may edit these parameters
 FAST_PITCH_SEMITONES_UP = 2  # Default: 2
@@ -31,6 +32,7 @@ else:
 TOFILE = None
 FROMFILE = None
 CWD = os.getcwd()
+TMP_FOLDER = f"{CWD}\\tmp"
 
 def main():
     global TOFILE, FROMFILE
@@ -40,7 +42,7 @@ def main():
         FROMFILE = open(FROMNAME, 'r', encoding='utf-8')
         run()
     except Exception as e:
-        exception = e
+        exception = traceback.format_exc()
     finally:
         if TOFILE:
             TOFILE.close()
@@ -48,9 +50,13 @@ def main():
             FROMFILE.close()
     
     if exception:
-        raise exception
+        print("An error has occurred:")
+        print(exception)
+        input("Press Enter to exit.")
 
 def run():
+    os.makedirs(TMP_FOLDER, exist_ok=True)
+
     print("Getting information from Audacity.")
     tracks = do_command_json('GetInfo: Type=Tracks')
     wave_tracks = [track for track in tracks if track['kind'] == 'wave']
@@ -65,7 +71,7 @@ def run():
     for i in range(len(tracks)):
         if tracks[i]['kind'] != 'wave':
             continue
-        out_path = f"{CWD}\\tmp\\{i}.wav"
+        out_path = TMP_FOLDER + f"\\{i}.wav"
         out_paths.append(out_path)
         print_debug(f"Exporting track {i} to {out_path}")
         export_track(i, loop_end_sample / SAMPLE_RATE, out_path)
@@ -83,8 +89,7 @@ def run():
         create_fast_brstm(normal_out_path, fast_out_path)
 
     print("Cleaning up.")
-    for path in out_paths:
-        os.remove(path)
+    shutil.rmtree(TMP_FOLDER)
 
     print("Done!")
 
@@ -122,14 +127,13 @@ def convert_vgaudio(in_paths, out_path, loop_start_sample=0, loop_end_sample=-1)
     # os.system(command)
 
 def create_fast_brstm(in_path, out_path):
-    tmp_folder = f"{CWD}\\tmp"
-    tmp_output = tmp_folder + f"\\{os.path.basename(in_path)}"
-    tmp_xml_path = tmp_folder + "\\lac.xml"
+    tmp_output = TMP_FOLDER + f"\\{os.path.basename(in_path)}"
+    tmp_xml_path = TMP_FOLDER + "\\lac.xml"
 
-    os.makedirs(tmp_folder, exist_ok=True)
+    os.makedirs(TMP_FOLDER, exist_ok=True)
 
     xml = LAC_XML_TEMPLATE \
-        .replace("{OUTPUT_DIR}", tmp_folder) \
+        .replace("{OUTPUT_DIR}", TMP_FOLDER) \
         .replace("{FAST_PITCH_SEMITONES_UP}", str(FAST_PITCH_SEMITONES_UP)) \
         .replace("{FAST_SPEED_MULTI}", str(FAST_SPEED_MULTI))
 
@@ -141,7 +145,6 @@ def create_fast_brstm(in_path, out_path):
     # os.system(command)
 
     shutil.copy(tmp_output, out_path)
-    shutil.rmtree(tmp_folder)
 
 def call_subprocess(command):
     if VERBOSE_LOG:
