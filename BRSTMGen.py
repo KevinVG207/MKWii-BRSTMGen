@@ -65,7 +65,7 @@ def run():
     for i in range(len(tracks)):
         if tracks[i]['kind'] != 'wave':
             continue
-        out_path = f"{CWD}\\{i}.wav"
+        out_path = f"{CWD}\\tmp\\{i}.wav"
         out_paths.append(out_path)
         print_debug(f"Exporting track {i} to {out_path}")
         export_track(i, loop_end_sample / SAMPLE_RATE, out_path)
@@ -154,6 +154,7 @@ def select_track(index):
     do_command(f'Select: Track={index} Mode=Set')
 
 def export_track(index, end, out_path):
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
     do_command(f"Select: Start=0 End={end} RelativeTo=ProjectStart Track={index} Mode=Set")
     do_command(f"SetTrack: Mute=0")
     do_command(f'Export2: Filename="{out_path}" NumChannels=2')
