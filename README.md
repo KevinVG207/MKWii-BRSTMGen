@@ -29,7 +29,7 @@ Note: Currently only Windows is supported.
 10. Copy BRSTMGen.py to the LAC folder.
 
 # Usage
-When the setup is complete, usage is fairly simple, assuming you want to create standard (multi-channel) BRSTMs used for Mario Kart Wii course music. Just a few things to note about the Audacity project.
+When the setup is complete, usage is fairly simple, assuming you want to create standard (multi-channel) BRSTMs used for Mario Kart Wii course music. Just a few things to note about the Audacity project and running the script.
 ## Setting up the Audacity project
 - Each stereo track becomes a stereo stream in the BRSTM. For multi-channel BRSTMS, simply add more stereo tracks.
 - The loop start and end points are determined by labels. To create a label, click on the timeline and press Ctrl+B. You will see a new labels track with one label.
