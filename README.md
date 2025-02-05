@@ -5,6 +5,7 @@ BRSTMGen is a Python script that creates BRSTM files from an open Audacity proje
 - Multi-channel BRSTM support, simply add more stereo tracks in Audacity.
 - Set looping points in Audacity using labels.
 - Generates both normal speed and final lap BRSTMs.
+- Configurable parameters.
 
 # Dependencies
 See the Setup section for installation instructions.
@@ -45,7 +46,7 @@ When the setup is complete, usage is fairly simple, assuming you want to create 
 - For convenience, you could create a shortcut to the script to somewhere else on your computer, like the desktop.
 
 ## Adjusting script parameters
-Towards the top of the script BRSTMGen.py, there are a few parameters you can adjust. The parameters are described below.
+Towards the top of the script BRSTMGen.py, there are a few parameters you can adjust. The parameters are described below. (You can edit the script in any text editor, like Notepad.)
 - FAST_PITCH_SEMITONES_UP (Default: 2)
   - The number of semitones to pitch up the final lap BRSTM.
 - FAST_SPEED_MULTI (Default: 1.1)
