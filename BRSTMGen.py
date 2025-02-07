@@ -101,23 +101,26 @@ def run():
 
 
 def get_loop_points(tracks):
-    loop_start_sample = 0
-    loop_end_sample = 0
+    loop_start_sample = -1
+    loop_end_sample = -1
 
     labels = do_command_json('GetInfo: Type=Labels')
 
     for track in labels:
         for label in track[1]:
             name = label[2].lower()
-            if name in ['start', 's'] or loop_start_sample == 0:
+            if name in ['start', 's'] or loop_start_sample == -1:
                 loop_start_sample = label[0] * SAMPLE_RATE
-            elif name in ['end', 'e'] or loop_end_sample == 0:
+            elif name in ['end', 'e'] or loop_end_sample == -1:
                 loop_end_sample = label[0] * SAMPLE_RATE
     
-    if loop_end_sample == 0:
+    if loop_start_sample == -1:
+        loop_start_sample = 0
+
+    if loop_end_sample == -1:
         loop_end_sample = max([track['end'] if 'end' in track else 0 for track in tracks]) * SAMPLE_RATE - 1
     
-    return math.floor(loop_start_sample), math.floor(loop_end_sample)
+    return max(0, math.floor(loop_start_sample)), max(0, math.floor(loop_end_sample))
 
 def convert_vgaudio(in_paths, out_path, loop_start_sample=0, loop_end_sample=-1):
     in_paths_str = " ".join([f'-i "{path}"' for path in in_paths])
